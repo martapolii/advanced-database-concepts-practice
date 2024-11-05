@@ -1,0 +1,24 @@
+-- Chapter 8 Exercise
+
+--Assignment 8-5: Identifying Dependencies 
+--At this point, you have created a variety of database objects in your schema. Use an Oracle tool 
+--to identify all the direct and indirect dependencies on the BB_BASKET table, and produce 
+--dependency lists in two different formats. Identify each object as a direct or an indirect 
+--dependency, and describe the path of dependency for each indirectly dependent object. 
+
+-- use dept tree procedure to populate the deptree and ideptree views
+                  -- object being analyzed, schema name, object name
+EXECUTE deptree_fill('TABLE', 'COMP214_F24_YU_72', 'BB_BASKET'); -- identifies ALL dependent objects related to this table 
+
+-- DEPTREE view lists dependencies with e numeric level scheme
+SELECT nested_level, name, type, seq#
+    FROM deptree
+    ORDER BY seq#; -- added so the list is ordered by sequence/hierarchy
+    
+-- nested level: 
+    -- 1 = DIRECT dependency (trigger otr foreign key)
+    -- 2 = INDIRECT dependency
+    
+--IDEPTREE lists same dependencies with with 1 or 2 indents to represent direct/indirect dependencies 
+SELECT *
+    FROM ideptree;
